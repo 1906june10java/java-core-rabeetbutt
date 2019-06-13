@@ -1,5 +1,7 @@
 package com.revature.eval.java.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +16,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
+		
 		// TODO Write an implementation for this method declaration
-		return null;
+		String [] splitPhrase = phrase.split("-|\\s");
+		
+		String acronym = "";
+		
+		for (String s : splitPhrase) {
+			char upper = Character.toUpperCase(s.charAt(0));
+			acronym = acronym + upper;
+		}
+		
+		phrase = acronym;
+		
+		return phrase;
 	}
 
 	/**
@@ -35,7 +49,46 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		  
+		int score = 0;
+		String upperString = string.toUpperCase();
+		
+		for (int i = 0; i < upperString.length(); i++) {
+			
+			char letter = upperString.charAt(i);
+			
+			if (letter == 'A' || letter == 'E' || letter == 'I' || letter == 'O'|| letter == 'U'|| letter == 'L'
+		     || letter == 'N' || letter == 'R' || letter == 'S'|| letter == 'T') {
+				score += 1;
+			}
+			
+			if (letter == 'D'|| letter == 'G') {
+				score += 2;
+			}
+		
+			if (letter == 'B'|| letter == 'C' || letter == 'M' || letter == 'P') {
+				score += 3;
+			}
+			
+			if (letter == 'F'|| letter == 'H' ||letter == 'V'|| letter == 'W' || letter == 'Y') {
+				score += 4;
+			}
+			
+			if (letter == 'K') {
+				score += 5;
+			}
+			
+			if (letter == 'J' || letter == 'X') {
+				score += 8;
+			}
+			
+			if (letter == 'Q' || letter == 'Z') {
+				score += 10;
+			}	
+			
+		}
+		
+		return score;
 	}
 
 	/**
@@ -70,10 +123,17 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
+		
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		String cleanNum = string;
+		
+		cleanNum = string.replaceAll("[^0-9]", "");
+		
+		return cleanNum;
 	}
-
+	
+	
 	/**
 	 * 4. Given a phrase, count the occurrences of each word in that phrase.
 	 * 
