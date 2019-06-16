@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class EvaluationService {
 
@@ -126,7 +127,15 @@ public class EvaluationService {
 		
 		// TODO Write an implementation for this method declaration
 		
-		String cleanNum = string;
+		if (string.length() > 11) {
+			throw new IllegalArgumentException(); 
+		}
+		
+		if (string.contains("^[0-9]")) {
+			throw new IllegalArgumentException();
+		}
+		
+		String cleanNum = string;		
 		
 		cleanNum = string.replaceAll("[^0-9]", "");
 		
@@ -143,9 +152,19 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public Map<String, Integer> wordCount(String string) {
+	public Map<String, Integer> wordCount (String string) {
+		
 		// TODO Write an implementation for this method declaration
-		return null;
+		  
+		  Map<String, Integer> wordMap = new HashMap<String,Integer>();  
+		  string = string.replace("\n", "");
+		  String[] splitString = string.split("\\s|,");
+		  
+		  for (String s : splitString) {
+			  int count = (string.split(s, -1).length) - 1;
+			  wordMap.put(s, count);
+		  }
+		  return wordMap;
 	}
 
 	/**
@@ -187,8 +206,33 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
+			
 			// TODO Write an implementation for this method declaration
-			return 0;
+			
+			int counter = 0;
+			int middle = sortedList.size() / 2;
+			
+			int castT = Integer.parseInt((String) t);
+			int castElement = Integer.parseInt((String) sortedList.get(middle));
+			
+			while (counter < sortedList.size()){
+				
+				if (castT == castElement) {
+					counter += 1;
+					return middle;
+				}
+				else if (castT < castElement) {
+					counter += 1;
+					middle = middle - 1;
+				}
+				else {
+					counter += 1;
+					middle = middle + 1;
+				}
+			}
+			
+			throw new IllegalArgumentException();
+			
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -222,8 +266,24 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
+		
 		// TODO Write an implementation for this method declaration
-		return false;
+		
+		String s = Integer.toString(input);
+		char[] digits = s.toCharArray();
+		int ArmstrongVal = 0;
+		
+		for (char c : digits) {
+			ArmstrongVal = ArmstrongVal + (int)(Math.pow(Character.getNumericValue(c), digits.length));
+		}
+		
+		if (ArmstrongVal == input) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 
 	/**
@@ -238,7 +298,16 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> primeFactors = new ArrayList<Long>();
+		
+		for (long i = 2; i <= l; i++) {
+			while (l % i == 0) {
+				primeFactors.add(i);
+				l /= i;
+			}
+		}
+		
+		return primeFactors;
 	}
 
 
@@ -319,8 +388,29 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
+		
 		// TODO Write an implementation for this method declaration
-		return 0;
+		String newString = string.replaceAll("[?]", " ");
+		String[] word = newString.split("\\s");
+		
+		String firstDig = word[3];
+		
+		if (firstDig.equals("plus")) {
+			return (Integer.parseInt(word[2]) + Integer.parseInt(word[4])); 
+		}
+		
+		else if (firstDig.equals("minus")) {
+			return (Integer.parseInt(word[2]) - Integer.parseInt(word[4])); 
+		}
+		
+		else if (firstDig.equals("multiplied")) {
+			return (Integer.parseInt(word[2]) * Integer.parseInt(word[5])); 
+		}
+		
+		else {
+			return (Integer.parseInt(word[2]) / Integer.parseInt(word[5])); 
+		}
+		
 	}
 
 }
