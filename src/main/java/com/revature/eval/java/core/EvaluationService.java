@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
+
 
 public class EvaluationService {
 
@@ -18,11 +18,12 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		
-		// TODO Write an implementation for this method declaration
+		//splits phrase up at spaces and hyphens
 		String [] splitPhrase = phrase.split("-|\\s");
 		
 		String acronym = "";
 		
+		//iterates through the split phrase to append the first character of each substring
 		for (String s : splitPhrase) {
 			char upper = Character.toUpperCase(s.charAt(0));
 			acronym = acronym + upper;
@@ -49,11 +50,11 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
 		  
 		int score = 0;
 		String upperString = string.toUpperCase();
 		
+		//iterates through the string in which scores are assigned based on letter values
 		for (int i = 0; i < upperString.length(); i++) {
 			
 			char letter = upperString.charAt(i);
@@ -124,15 +125,15 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		
-		// TODO Write an implementation for this method declaration
-		
+			
+		//throws non numeric exception 
 		if (string.contains("!")) {
 			throw new IllegalArgumentException();
 		}
 		
 		String cleanNum = string;	
 		
+		//removes all non-numeric characters from number
 		cleanNum = string.replaceAll("[^0-9]", "");
 		
 		if (cleanNum.length() > 11) {
@@ -156,12 +157,15 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount (String string) {
 		
-		// TODO Write an implementation for this method declaration
+			
+		  Map<String, Integer> wordMap = new HashMap<String,Integer>();
 		  
-		  Map<String, Integer> wordMap = new HashMap<String,Integer>();  
+		  //removes newline characters and spaces 
 		  string = string.replace("\n", "");
 		  String[] splitString = string.split("\\s|,");
 		  
+		  //iterates over split phrase and counts the occurrences of each phrase 
+		  //non-positive limit means the string can have any length and the pattern will be applied indefinitely
 		  for (String s : splitString) {
 			  int count = (string.split(s, -1).length) - 1;
 			  wordMap.put(s, count);
@@ -208,14 +212,33 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
+	
+			int first = 0;
+			int last = sortedList.size() - 1;
+			int key = Integer.valueOf(t.toString());
+			int mid = (first + last)/2;  
 			
-			// TODO Write an implementation for this method declaration
-			
-			int middle = sortedList.size() / 2;
-			
-			
-			
-			
+			//loops through until all elements have been checked
+			while( first <= last ){  
+				
+				if (Integer.valueOf(sortedList.get(mid).toString()) < key){  
+					//check right side of sub-array
+					first = mid + 1;
+					
+			    } else if (Integer.valueOf(sortedList.get(mid).toString()) == key){  
+			    	//key is found
+			    	return mid;
+			    	
+			    } else {  
+			    	//check left side of sub-array
+			    	last = mid - 1;  
+			    }
+				
+				//find new middle based on value of key
+			    mid = (first + last)/2;  
+			}  
+				
+			throw new IllegalArgumentException();
 			
 		}
 
@@ -231,7 +254,7 @@ public class EvaluationService {
 		public void setSortedList(List<T> sortedList) {
 			this.sortedList = sortedList;
 		}
-
+		
 	}
 
 	/**
@@ -251,12 +274,11 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		
-		// TODO Write an implementation for this method declaration
-		
 		String s = Integer.toString(input);
 		char[] digits = s.toCharArray();
 		int ArmstrongVal = 0;
 		
+		//iterates over array and computes Armstrong for each digit
 		for (char c : digits) {
 			ArmstrongVal = ArmstrongVal + (int)(Math.pow(Character.getNumericValue(c), digits.length));
 		}
@@ -281,10 +303,11 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
+
 		List<Long> primeFactors = new ArrayList<Long>();
 		
 		for (long i = 2; i <= l; i++) {
+			//checks if long is divisible by factor
 			while (l % i == 0) {
 				primeFactors.add(i);
 				l /= i;
@@ -341,6 +364,7 @@ public class EvaluationService {
 				if ((int)c >= 97 && (int)c <= 122 || (int) c >= 48 && (int)c <= 57) {
 					
 					if ((int)c >= 97 && (int)c <= 122) { 
+						//formula to encrypt ASCII 
 						newAscii = (int)c + (25 - 2 * ((int)c - 97));
 					}
 					else {
@@ -349,6 +373,7 @@ public class EvaluationService {
 					
 					counter += 1;
 					
+					//prints out space every 5 characters to get format 
 					if (counter == 5) {
 						encodedText = encodedText + (char)newAscii + " ";
 						counter = 0;
@@ -357,14 +382,11 @@ public class EvaluationService {
 					else {
 						encodedText = encodedText + (char)newAscii;
 					}
-				}
-				
-				
-				
-				
+				}			
 				
 			}
-			System.out.println(encodedText); 
+			//removes whitespace at the end of the string
+			encodedText = encodedText.replaceAll("\\s$", "");
 			return encodedText;
 			
 		}
@@ -376,7 +398,6 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
 			
 			string = string.toLowerCase();
 			
@@ -389,7 +410,8 @@ public class EvaluationService {
 				if ((int)c >= 97 && (int)c <= 122 || (int) c >= 48 && (int)c <= 57) {
 					
 					if ((int)c >= 97 && (int)c <= 122) { 
-						newAscii = (int)c + (25 - 2 * ((int)c - 97));
+						//formula for decryption
+						newAscii = (int)c - (25 + 2 * ((int)c - 122));
 					}
 					else {
 						newAscii = (int)c;
@@ -399,7 +421,7 @@ public class EvaluationService {
 				}
 				
 			}
-			System.out.println(decodedText); 
+			
 			return decodedText;
 		}
 	}
@@ -433,12 +455,13 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		
-		// TODO Write an implementation for this method declaration
+		// removes ? from second operand
 		String newString = string.replaceAll("[?]", " ");
 		String[] word = newString.split("\\s");
 		
 		String firstDig = word[3];
 		
+		//addition, subtraction, division, multiplication are determined from string array
 		if (firstDig.equals("plus")) {
 			return (Integer.parseInt(word[2]) + Integer.parseInt(word[4])); 
 		}
