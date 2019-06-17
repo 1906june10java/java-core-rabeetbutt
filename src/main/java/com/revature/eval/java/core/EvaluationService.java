@@ -127,17 +127,19 @@ public class EvaluationService {
 		
 		// TODO Write an implementation for this method declaration
 		
-		if (string.length() > 11) {
-			throw new IllegalArgumentException(); 
-		}
-		
-		if (string.contains("^[0-9]")) {
+		if (string.contains("!")) {
 			throw new IllegalArgumentException();
 		}
 		
-		String cleanNum = string;		
+		String cleanNum = string;	
 		
 		cleanNum = string.replaceAll("[^0-9]", "");
+		
+		if (cleanNum.length() > 11) {
+			throw new IllegalArgumentException();
+		}
+		
+		
 		
 		return cleanNum;
 	}
@@ -209,29 +211,11 @@ public class EvaluationService {
 			
 			// TODO Write an implementation for this method declaration
 			
-			int counter = 0;
 			int middle = sortedList.size() / 2;
 			
-			int castT = Integer.parseInt((String) t);
-			int castElement = Integer.parseInt((String) sortedList.get(middle));
 			
-			while (counter < sortedList.size()){
-				
-				if (castT == castElement) {
-					counter += 1;
-					return middle;
-				}
-				else if (castT < castElement) {
-					counter += 1;
-					middle = middle - 1;
-				}
-				else {
-					counter += 1;
-					middle = middle + 1;
-				}
-			}
 			
-			throw new IllegalArgumentException();
+			
 			
 		}
 
@@ -336,7 +320,7 @@ public class EvaluationService {
 	 *
 	 */
 	static class AtbashCipher {
-
+		
 		/**
 		 * Question 8
 		 * 
@@ -344,8 +328,45 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			string = string.toLowerCase();
+			
+			char[] plainText = string.toCharArray();
+			String encodedText = "";
+			int counter = 0;
+			int newAscii = 0;
+			
+			for (char c : plainText) {
+				
+				if ((int)c >= 97 && (int)c <= 122 || (int) c >= 48 && (int)c <= 57) {
+					
+					if ((int)c >= 97 && (int)c <= 122) { 
+						newAscii = (int)c + (25 - 2 * ((int)c - 97));
+					}
+					else {
+						newAscii = (int)c;
+					}
+					
+					counter += 1;
+					
+					if (counter == 5) {
+						encodedText = encodedText + (char)newAscii + " ";
+						counter = 0;
+					}
+					
+					else {
+						encodedText = encodedText + (char)newAscii;
+					}
+				}
+				
+				
+				
+				
+				
+			}
+			System.out.println(encodedText); 
+			return encodedText;
+			
 		}
 
 		/**
@@ -356,7 +377,30 @@ public class EvaluationService {
 		 */
 		public static String decode(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			
+			string = string.toLowerCase();
+			
+			char[] cipherText = string.toCharArray();
+			String decodedText = "";
+			int newAscii = 0;
+			
+			for (char c : cipherText) {
+				
+				if ((int)c >= 97 && (int)c <= 122 || (int) c >= 48 && (int)c <= 57) {
+					
+					if ((int)c >= 97 && (int)c <= 122) { 
+						newAscii = (int)c + (25 - 2 * ((int)c - 97));
+					}
+					else {
+						newAscii = (int)c;
+					}
+					
+					decodedText = decodedText + (char)newAscii;
+				}
+				
+			}
+			System.out.println(decodedText); 
+			return decodedText;
 		}
 	}
 
